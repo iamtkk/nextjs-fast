@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://iamtk-blog.vercel.app/
+
+# Sitemaps
+Sitemap: https://iamtk-blog.vercel.app/sitemap.xml

@@ -3,7 +3,8 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Utterances from './Utterances'
 
 const name = 'Your Name'
 export const siteTitle = 'Next.js Sample Website'
@@ -16,13 +17,21 @@ export default function Layout({ children, home }) {
         : 'light'
       : 'light'
   )
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.querySelector('body').classList.add('dark')
+    } else {
+      document.querySelector('body').classList.remove('dark')
+    }
+  }, [theme])
   const handleClick = () => {
     const theme = localStorage.getItem('theme')
     if (theme === 'dark') {
-      localoStorage.setTheme('theme', 'light')
+      localStorage.setItem('theme', 'light')
       setTheme('light')
     } else {
-      localoStorage.setTheme('theme', 'dark')
+      localStorage.setItem('theme', 'dark')
       setTheme('dark')
     }
   }
@@ -46,9 +55,9 @@ export default function Layout({ children, home }) {
         </Head>
         <button className="w-12 px-2" onClick={handleClick}>
           {theme === 'light' ? (
-            <img src="/light-mode.svg" alt="light" />
-          ) : (
             <img src="/dark-mode.svg" alt="dark" />
+          ) : (
+            <img src="/light-mode.svg" alt="light" />
           )}
         </button>
         <header className={styles.header}>
@@ -86,9 +95,12 @@ export default function Layout({ children, home }) {
         </header>
         <main>{children}</main>
         {!home && (
-          <div className={styles.backToHome}>
-            <Link href="/">← Back to home</Link>
-          </div>
+          <>
+            <Utterances />
+            <div className={styles.backToHome}>
+              <Link href="/">← Back to home</Link>
+            </div>
+          </>
         )}
       </div>
     </div>
